@@ -19,6 +19,13 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
         {
             PostQuitMessage(0);
         }
+        else if (wParam == VK_RETURN)
+        {
+            HDC hdc = GetDC(hWnd);
+            POINT points[6] = { {50, 50}, {100, 50}, {150, 100}, {100, 200}, {50, 100}, {50, 50} };
+            Polyline(hdc, points, 6);
+            ReleaseDC(hWnd, hdc);
+        }
         else
         {
             HDC hdc = GetDC(hWnd);
