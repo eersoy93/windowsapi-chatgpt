@@ -15,6 +15,17 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
         {
             MessageBox(hWnd, L"Hello, World!", L"Hello, World!", MB_OK | MB_ICONEXCLAMATION);
         }
+        else if (wParam == VK_ESCAPE)
+        {
+            PostQuitMessage(0);
+        }
+        else
+        {
+            HDC hdc = GetDC(hWnd);
+            TextOut(hdc, 0, 0, L"Hello, World!", 13);
+            ReleaseDC(hWnd, hdc);
+        }
+        break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
