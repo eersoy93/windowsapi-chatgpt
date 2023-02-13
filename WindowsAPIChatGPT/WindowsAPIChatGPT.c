@@ -96,7 +96,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     RegisterClassEx(&wc);
 
     HWND hWnd = CreateWindowEx(0, L"WindowClass", L"Hello, World!", WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        CW_USEDEFAULT, CW_USEDEFAULT, 640, 480,
         NULL, NULL, hInstance, NULL);
 
     if (!hWnd)
