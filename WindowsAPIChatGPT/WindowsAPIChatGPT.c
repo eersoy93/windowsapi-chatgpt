@@ -2,12 +2,56 @@
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    static HWND hButton;
     switch (message)
     {
+    case WM_CREATE:
+    {
+        RECT rc = { 0 };
+        GetClientRect(hWnd, &rc);
+
+        hButton = CreateWindow(L"BUTTON", L"&Exit",
+            WS_VISIBLE | WS_CHILD | WS_TABSTOP | BS_DEFPUSHBUTTON,
+            rc.bottom - 90, rc.right - 35, 80, 25,
+            hWnd, (HMENU)1, NULL, NULL);
+
+        break;
+    }
+    case WM_PAINT:
+    {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hWnd, &ps);
+
+        EndPaint(hWnd, &ps);
+        break;
+    }
+    case WM_SIZE:
+    {
+        RECT rc = { 0 };
+        GetClientRect(hWnd, &rc);
+
+        MoveWindow(hButton,
+            rc.right - 90, rc.bottom - 35, 80, 25,
+            TRUE);
+
+        break;
+    }
+    case WM_COMMAND:
+    {
+        if (LOWORD(wParam) == 1) {
+            PostQuitMessage(0);
+            break;
+        }
+
+        break;
+    }
     case WM_CLOSE:
+    {
         PostQuitMessage(0);
         break;
+    }
     case WM_KEYDOWN:
+    {
         if (wParam == VK_SPACE)
         {
             MessageBox(hWnd, L"Hello, World!", L"Hello, World!", MB_OK | MB_ICONEXCLAMATION);
@@ -30,6 +74,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
             ReleaseDC(hWnd, hdc);
         }
         break;
+    }
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
